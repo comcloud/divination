@@ -624,7 +624,7 @@ if "messages" not in st.session_state:
 
 # 初始化API密钥
 if "api_key" not in st.session_state:
-    st.session_state.api_key = os.getenv("MODELSCOPE_API_KEY")
+    st.session_state.api_key = os.getenv("MODELSCOPE_API_KEY", "ms-df56303c-e814-48da-a195-3dc2487c3b33")
 
 # 初始化占卜智能体
 divination_agent = DivinationAgent(api_key=st.session_state.api_key)
@@ -638,7 +638,7 @@ with st.sidebar:
     # API密钥输入
     api_key_input = st.text_input(
         "ModelScope API密钥",
-        # value=st.session_state.api_key,
+        value=st.session_state.api_key,
         type="password",
         help="请输入您的ModelScope API密钥以使用AI占卜功能"
     )
