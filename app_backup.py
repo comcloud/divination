@@ -20,13 +20,6 @@ st.markdown("""
     /* 页面背景和整体样式 */
     .stApp {
         background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-        animation: gradientShift 8s ease-in-out infinite;
-    }
-    
-    /* 渐变背景动画 */
-    @keyframes gradientShift {
-        0%, 100% { background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%); }
-        50% { background: linear-gradient(135deg, #e4edf5 0%, #f5f7fa 100%); }
     }
     
     /* 主标题动画效果 */
@@ -34,15 +27,8 @@ st.markdown("""
         text-align: center;
         color: #8E44AD;
         font-family: 'Arial', sans-serif;
-        animation: fadeInDown 1s ease-out, titleGlow 3s ease-in-out infinite alternate;
+        animation: fadeInDown 1s ease-out;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        position: relative;
-    }
-    
-    /* 标题发光效果 */
-    @keyframes titleGlow {
-        0% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1), 0 0 10px rgba(142, 68, 173, 0.3); }
-        100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1), 0 0 20px rgba(142, 68, 173, 0.6); }
     }
     
     /* 卡片样式优化 */
@@ -53,112 +39,31 @@ st.markdown("""
         box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: fadeIn 0.8s ease-out;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .divination-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-    }
-    
-    .divination-card:hover::before {
-        left: 100%;
     }
     
     .divination-card:hover {
-        transform: translateY(-5px) scale(1.02);
+        transform: translateY(-5px);
         box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
     
-    /* 结果容器优化 - 改善文字显示 */
+    /* 结果容器优化 */
     .result-container {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        background-color: #ffffff;
         border-radius: 15px;
-        padding: 25px 30px;
+        padding: 25px;
         margin-top: 25px;
         border-left: 6px solid #8E44AD;
         box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        line-height: 1.8;
+        line-height: 1.6;
         font-size: 16px;
-        color: #2c3e50;
         transition: all 0.3s ease;
         animation: slideInUp 0.6s ease-out;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .result-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #8E44AD 0%, #9b59b6 100%);
-        border-radius: 0 15px 0 60px;
-        opacity: 0.1;
-    }
-    
-    /* 改善文本样式 */
-    .result-container p {
-        margin-bottom: 1.2em;
-        line-height: 1.8;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .result-container ul, .result-container ol {
-        margin-bottom: 1.2em;
-        padding-left: 1.5em;
-    }
-    
-    .result-container li {
-        margin-bottom: 0.5em;
-        line-height: 1.7;
-    }
-    
-    .result-container strong {
-        color: #8E44AD;
-        font-weight: 600;
-        position: relative;
-    }
-    
-    .result-container strong::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, #8E44AD, #9b59b6);
-        animation: underlineGlow 2s ease-in-out infinite alternate;
-    }
-    
-    @keyframes underlineGlow {
-        0% { opacity: 0.3; }
-        100% { opacity: 0.8; }
-    }
-    
-    .result-container em {
-        color: #9b59b6;
-        font-style: italic;
-        background: linear-gradient(90deg, transparent, rgba(155, 89, 182, 0.1), transparent);
-        padding: 2px 4px;
-        border-radius: 3px;
     }
     
     .result-container:hover {
         box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-        transform: translateX(2px);
     }
     
     /* 侧边栏样式 */
@@ -177,23 +82,6 @@ st.markdown("""
         font-weight: bold;
         transition: all 0.3s ease;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .stButton>button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-    }
-    
-    .stButton>button:hover::before {
-        left: 100%;
     }
     
     .stButton>button:hover {
@@ -224,7 +112,7 @@ st.markdown("""
         font-size: 0.85em;
         margin-left: 12px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        animation: pulse 2s infinite, bounce 3s infinite;
+        animation: pulse 2s infinite;
     }
     
     /* 模型信息样式 */
@@ -236,12 +124,6 @@ st.markdown("""
         font-size: 0.95em;
         border: 1px solid #bee5eb;
         box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-    }
-    
-    .model-info:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     
     /* 过程步骤样式 */
@@ -255,28 +137,11 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         transition: all 0.3s ease;
         animation: fadeInUp 0.5s ease-out;
-        position: relative;
-    }
-    
-    .process-step::after {
-        content: '✨';
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        opacity: 0.7;
-        animation: sparkle 1.5s infinite;
-    }
-    
-    @keyframes sparkle {
-        0%, 100% { opacity: 0.7; transform: translateY(-50%) scale(1); }
-        50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
     }
     
     .process-step:hover {
-        transform: translateX(5px) scale(1.02);
+        transform: translateX(5px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        border-left-color: #9b59b6;
     }
     
     /* 卦象显示样式 */
@@ -287,13 +152,7 @@ st.markdown("""
         margin: 25px 0;
         color: #8E44AD;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        animation: bounceIn 1s ease-out, float 3s ease-in-out infinite;
-    }
-    
-    /* 浮动效果 */
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        animation: bounceIn 1s ease-out;
     }
     
     /* 可视化容器样式 */
@@ -306,31 +165,10 @@ st.markdown("""
         border: 1px solid #e9ecef;
         transition: all 0.3s ease;
         animation: zoomIn 0.6s ease-out;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .visualization-container::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, #8E44AD, #9b59b6, #3498db, #e74c3c);
-        border-radius: 15px;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .visualization-container:hover::before {
-        opacity: 0.3;
     }
     
     .visualization-container:hover {
         box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-        transform: scale(1.01);
     }
     
     /* 爻线样式 */
@@ -343,69 +181,31 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         transition: all 0.3s ease;
-        animation: slideIn 0.5s ease-out;
     }
     
     .yao-line:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
     }
     
     /* 流式文本样式优化 */
     .stream-text {
         white-space: pre-wrap;
         font-family: 'Microsoft YaHei', 'SimHei', Arial, sans-serif;
-        line-height: 1.8;
-        color: #2c3e50;
+        line-height: 1.7;
+        color: #333;
         font-size: 16px;
-        position: relative;
-    }
-    
-    .stream-text::after {
-        content: '✨';
-        animation: sparkle 1.5s infinite;
-        margin-left: 5px;
-    }
-    
-    @keyframes sparkle {
-        0%, 100% { opacity: 0; transform: scale(0.8); }
-        50% { opacity: 1; transform: scale(1.2); }
     }
     
     /* 图表容器样式 */
     .chart-container {
         text-align: center;
         margin: 15px 0;
-        padding: 15px;
+        padding: 10px;
         background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         animation: fadeIn 0.8s ease-out;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .chart-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #8E44AD, #9b59b6, #3498db);
-        animation: shimmer 2s infinite;
-    }
-    
-    @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-    
-    .chart-container:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
     
     /* 图表图片样式 */
@@ -413,12 +213,6 @@ st.markdown("""
         max-width: 100%;
         height: auto;
         border-radius: 8px;
-        transition: all 0.3s ease;
-    }
-    
-    .chart-container:hover img {
-        transform: scale(1.02);
-        filter: brightness(1.05);
     }
     
     /* 动画关键帧 */
@@ -457,17 +251,6 @@ st.markdown("""
         to {
             opacity: 1;
             transform: translateY(0);
-        }
-    }
-    
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
         }
     }
     
@@ -511,18 +294,6 @@ st.markdown("""
         }
     }
     
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-        }
-        40% {
-            transform: translateY(-10px);
-        }
-        60% {
-            transform: translateY(-5px);
-        }
-    }
-    
     /* 打字机效果 */
     .typing-effect {
         overflow: hidden;
@@ -560,57 +331,6 @@ st.markdown("""
     ::-webkit-scrollbar-thumb:hover {
         background: #8E44AD;
     }
-    
-    /* 输入框样式 */
-    .stTextInput>div>div>input {
-        border-radius: 10px;
-        border: 2px solid #e0e0e0;
-        padding: 12px 15px;
-        font-size: 16px;
-        transition: all 0.3s ease;
-    }
-    
-    .stTextInput>div>div>input:focus {
-        border-color: #8E44AD;
-        box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
-        outline: none;
-    }
-    
-    /* 聊天消息样式 */
-    .stChatMessage {
-        border-radius: 15px;
-        padding: 15px;
-        margin: 10px 0;
-        animation: messageSlide 0.5s ease-out;
-    }
-    
-    @keyframes messageSlide {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    /* 加载动画 */
-    .loading-dots {
-        display: inline-block;
-    }
-    
-    .loading-dots::after {
-        content: '';
-        animation: dots 1.5s infinite;
-    }
-    
-    @keyframes dots {
-        0%, 20% { content: ''; }
-        40% { content: '.'; }
-        60% { content: '..'; }
-        80%, 100% { content: '...'; }
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -638,7 +358,7 @@ with st.sidebar:
     # API密钥输入
     api_key_input = st.text_input(
         "ModelScope API密钥",
-        # value=st.session_state.api_key,
+        value=st.session_state.api_key,
         type="password",
         help="请输入您的ModelScope API密钥以使用AI占卜功能"
     )
@@ -869,7 +589,7 @@ if prompt := st.chat_input("请输入您想占卜的问题..."):
                 time.sleep(0.5)
                 process_placeholder.empty()
                 
-                warning_msg = "⚠️ API密钥未设置或使用默认密钥，无法调用AI模型进行深度解读。请在侧边栏输入您的ModelScope API密钥以启用AI功能。"
+                warning_msg = "⚠️ API密钥未设置，无法调用AI模型进行深度解读。请在侧边栏输入您的ModelScope API密钥以启用AI功能。"
                 st.warning(warning_msg)
                 st.session_state.messages.append({"role": "assistant", "content": warning_msg})
             else:

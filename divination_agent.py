@@ -101,8 +101,19 @@ class DivinationAgent:
             
             return response
         except Exception as e:
-            # 如果AI解释失败，返回默认解释
-            return f"AI解读暂时不可用，使用默认解释：{result}"
+            # 检查具体错误类型
+            error_message = str(e)
+            if "401" in error_message or "Unauthorized" in error_message:
+                raise Exception("API密钥无效或已过期，请检查您的ModelScope API密钥")
+            elif "403" in error_message or "Forbidden" in error_message:
+                raise Exception("API密钥权限不足，请检查您的ModelScope API密钥权限")
+            elif "429" in error_message or "rate limit" in error_message.lower():
+                raise Exception("API请求频率过高，请稍后重试")
+            elif "timeout" in error_message.lower():
+                raise Exception("API请求超时，请检查网络连接")
+            else:
+                # 重新抛出具体错误
+                raise Exception(f"AI解读失败：{error_message}")
     
     def plum_blossom_divination(self, question: str) -> str:
         """梅花易数占卜"""
@@ -138,18 +149,20 @@ class DivinationAgent:
         yield f"占卜结果：{hexagram}\n数字：{numbers[0]}, {numbers[1]}, {numbers[2]}\n\n"
         yield "AI解读：\n"
         
-        stream_response = self._get_ai_interpretation_stream("梅花易数", question, result)
-        # 检查是否是字符串（错误情况）
-        if isinstance(stream_response, str):
-            yield stream_response
-        else:
-            # 处理流式响应
-            try:
+        try:
+            stream_response = self._get_ai_interpretation_stream("梅花易数", question, result)
+            # 检查是否是字符串（错误情况）
+            if isinstance(stream_response, str):
+                yield stream_response
+            else:
+                # 处理流式响应
                 for chunk in stream_response:
                     if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
                         yield chunk.choices[0].delta.content
-            except Exception as e:
-                yield f"\n流式输出过程中出现错误：{str(e)}"
+        except Exception as e:
+            yield f"\nAI解读失败：{str(e)}"
+            # 重新抛出异常以供上层处理
+            raise
     
     def heavenly_stems_earthly_branches(self, question: str) -> str:
         """天干地支占卜"""
@@ -191,18 +204,20 @@ class DivinationAgent:
         yield f"天干：{stem}\n地支：{branch}\n干支组合：{stem}{branch}\n\n"
         yield "AI解读：\n"
         
-        stream_response = self._get_ai_interpretation_stream("天干地支", question, result)
-        # 检查是否是字符串（错误情况）
-        if isinstance(stream_response, str):
-            yield stream_response
-        else:
-            # 处理流式响应
-            try:
+        try:
+            stream_response = self._get_ai_interpretation_stream("天干地支", question, result)
+            # 检查是否是字符串（错误情况）
+            if isinstance(stream_response, str):
+                yield stream_response
+            else:
+                # 处理流式响应
                 for chunk in stream_response:
                     if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
                         yield chunk.choices[0].delta.content
-            except Exception as e:
-                yield f"\n流式输出过程中出现错误：{str(e)}"
+        except Exception as e:
+            yield f"\nAI解读失败：{str(e)}"
+            # 重新抛出异常以供上层处理
+            raise
     
     def six_yao_divination(self, question: str) -> str:
         """六爻占卜"""
@@ -254,18 +269,20 @@ class DivinationAgent:
         yield f"六爻卦象：\n{hexagram}\n\n"
         yield "AI解读：\n"
         
-        stream_response = self._get_ai_interpretation_stream("六爻", question, result)
-        # 检查是否是字符串（错误情况）
-        if isinstance(stream_response, str):
-            yield stream_response
-        else:
-            # 处理流式响应
-            try:
+        try:
+            stream_response = self._get_ai_interpretation_stream("六爻", question, result)
+            # 检查是否是字符串（错误情况）
+            if isinstance(stream_response, str):
+                yield stream_response
+            else:
+                # 处理流式响应
                 for chunk in stream_response:
                     if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
                         yield chunk.choices[0].delta.content
-            except Exception as e:
-                yield f"\n流式输出过程中出现错误：{str(e)}"
+        except Exception as e:
+            yield f"\nAI解读失败：{str(e)}"
+            # 重新抛出异常以供上层处理
+            raise
     
     def purple_star_divination(self, question: str) -> str:
         """紫微斗数占卜"""
@@ -305,18 +322,20 @@ class DivinationAgent:
         yield f"主星：{star}\n宫位：{position}\n\n"
         yield "AI解读：\n"
         
-        stream_response = self._get_ai_interpretation_stream("紫微斗数", question, result)
-        # 检查是否是字符串（错误情况）
-        if isinstance(stream_response, str):
-            yield stream_response
-        else:
-            # 处理流式响应
-            try:
+        try:
+            stream_response = self._get_ai_interpretation_stream("紫微斗数", question, result)
+            # 检查是否是字符串（错误情况）
+            if isinstance(stream_response, str):
+                yield stream_response
+            else:
+                # 处理流式响应
                 for chunk in stream_response:
                     if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
                         yield chunk.choices[0].delta.content
-            except Exception as e:
-                yield f"\n流式输出过程中出现错误：{str(e)}"
+        except Exception as e:
+            yield f"\nAI解读失败：{str(e)}"
+            # 重新抛出异常以供上层处理
+            raise
     
     def _generate_hexagram(self, numbers: List[int]) -> str:
         """根据数字生成卦象名称"""
@@ -355,13 +374,17 @@ class DivinationAgent:
         """执行占卜（流式输出）"""
         try:
             if divination_type == "梅花易数":
-                yield from self.plum_blossom_divination_stream(question)
+                for chunk in self.plum_blossom_divination_stream(question):
+                    yield chunk
             elif divination_type == "天干地支":
-                yield from self.heavenly_stems_earthly_branches_stream(question)
+                for chunk in self.heavenly_stems_earthly_branches_stream(question):
+                    yield chunk
             elif divination_type == "六爻":
-                yield from self.six_yao_divination_stream(question)
+                for chunk in self.six_yao_divination_stream(question):
+                    yield chunk
             elif divination_type == "紫微斗数":
-                yield from self.purple_star_divination_stream(question)
+                for chunk in self.purple_star_divination_stream(question):
+                    yield chunk
             else:
                 yield f"暂不支持 {divination_type} 占卜方法"
         except Exception as e:

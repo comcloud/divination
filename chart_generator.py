@@ -66,13 +66,13 @@ class ChartGenerator:
     def generate_six_yao_chart(self, yao_lines: List[str]) -> str:
         """生成六爻卦象图"""
         try:
-            # 创建图形 - 减小尺寸
-            fig, ax = plt.subplots(figsize=(6, 8))
+            # 创建图形 - 进一步减小尺寸
+            fig, ax = plt.subplots(figsize=(5, 6))
             fig.patch.set_facecolor('#f8f9fa')
             ax.set_facecolor('#f8f9fa')
             
             # 设置标题
-            ax.set_title('六爻卦象', fontsize=14, fontweight='bold', pad=15)
+            ax.set_title('Six Yao Diagram', fontsize=12, fontweight='bold', pad=10)
             
             # 绘制爻线
             y_positions = np.arange(6, 0, -1)  # 从上到下：6, 5, 4, 3, 2, 1
@@ -80,17 +80,17 @@ class ChartGenerator:
             for i, line in enumerate(yao_lines):
                 y_pos = y_positions[i]
                 if line == "———":  # 阳爻
-                    ax.hlines(y_pos, 0.3, 0.7, linewidth=6, color='#8E44AD')
+                    ax.hlines(y_pos, 0.3, 0.7, linewidth=5, color='#8E44AD')
                 else:  # 阴爻
-                    ax.hlines(y_pos, 0.3, 0.45, linewidth=6, color='#8E44AD')
-                    ax.hlines(y_pos, 0.55, 0.7, linewidth=6, color='#8E44AD')
+                    ax.hlines(y_pos, 0.3, 0.45, linewidth=5, color='#8E44AD')
+                    ax.hlines(y_pos, 0.55, 0.7, linewidth=5, color='#8E44AD')
             
             # 设置坐标轴
             ax.set_xlim(0, 1)
             ax.set_ylim(0.5, 6.5)
             ax.set_yticks(y_positions)
-            ax.set_yticklabels([f'第{i}爻' for i in range(6, 0, -1)], fontsize=10)
-            ax.tick_params(axis='y', labelsize=10)
+            ax.set_yticklabels([f'Line {i}' for i in range(6, 0, -1)], fontsize=9)
+            ax.tick_params(axis='y', labelsize=9)
             
             # 移除x轴刻度
             ax.set_xticks([])
@@ -103,7 +103,7 @@ class ChartGenerator:
             
             # 保存为base64字符串 - 降低DPI
             img_buffer = io.BytesIO()
-            plt.savefig(img_buffer, format='png', dpi=150, bbox_inches='tight')
+            plt.savefig(img_buffer, format='png', dpi=100, bbox_inches='tight')
             img_buffer.seek(0)
             img_str = base64.b64encode(img_buffer.read()).decode()
             plt.close()
@@ -116,16 +116,16 @@ class ChartGenerator:
     def generate_plum_blossom_chart(self, numbers: List[int]) -> str:
         """生成梅花易数数字分布图"""
         try:
-            # 创建图形 - 减小尺寸
-            fig, ax = plt.subplots(figsize=(8, 5))
+            # 创建图形 - 进一步减小尺寸
+            fig, ax = plt.subplots(figsize=(6, 4))
             fig.patch.set_facecolor('#f8f9fa')
             ax.set_facecolor('#f8f9fa')
             
             # 设置标题
-            ax.set_title('梅花易数数字分布', fontsize=14, fontweight='bold', pad=15)
+            ax.set_title('Plum Blossom Numbers', fontsize=12, fontweight='bold', pad=10)
             
             # 数据
-            labels = ['数字1', '数字2', '数字3']
+            labels = ['Number 1', 'Number 2', 'Number 3']
             values = numbers
             
             # 创建柱状图
@@ -135,11 +135,11 @@ class ChartGenerator:
             for bar, value in zip(bars, values):
                 height = bar.get_height()
                 ax.text(bar.get_x() + bar.get_width()/2., height + 0.1,
-                       f'{value}', ha='center', va='bottom', fontsize=10, fontweight='bold')
+                       f'{value}', ha='center', va='bottom', fontsize=9, fontweight='bold')
             
             # 设置标签
-            ax.set_ylabel('数值', fontsize=10)
-            ax.tick_params(axis='both', labelsize=9)
+            ax.set_ylabel('Value', fontsize=9)
+            ax.tick_params(axis='both', labelsize=8)
             
             # 添加网格
             ax.grid(True, alpha=0.3, axis='y')
@@ -149,7 +149,7 @@ class ChartGenerator:
             
             # 保存为base64字符串 - 降低DPI
             img_buffer = io.BytesIO()
-            plt.savefig(img_buffer, format='png', dpi=150, bbox_inches='tight')
+            plt.savefig(img_buffer, format='png', dpi=100, bbox_inches='tight')
             img_buffer.seek(0)
             img_str = base64.b64encode(img_buffer.read()).decode()
             plt.close()
@@ -162,30 +162,30 @@ class ChartGenerator:
     def generate_heavenly_stems_chart(self, stem: str, branch: str) -> str:
         """生成天干地支关系图"""
         try:
-            # 创建图形 - 减小尺寸
-            fig, ax = plt.subplots(figsize=(8, 6))
+            # 创建图形 - 进一步减小尺寸
+            fig, ax = plt.subplots(figsize=(6, 5))
             fig.patch.set_facecolor('#f8f9fa')
             ax.set_facecolor('#f8f9fa')
             
             # 设置标题
-            ax.set_title('天干地支关系图', fontsize=14, fontweight='bold', pad=15)
+            ax.set_title('Heavenly Stems Diagram', fontsize=12, fontweight='bold', pad=10)
             
             # 创建一个圆形图来展示天干地支的关系
             # 这里简化为展示天干和地支的文本信息
-            ax.text(0.5, 0.7, f'天干: {stem}', fontsize=16, ha='center', va='center', 
+            ax.text(0.5, 0.7, f'Heavenly Stem: {stem}', fontsize=14, ha='center', va='center', 
                    bbox=dict(boxstyle="round,pad=0.3", facecolor="#9b59b6", alpha=0.7))
-            ax.text(0.5, 0.3, f'地支: {branch}', fontsize=16, ha='center', va='center',
+            ax.text(0.5, 0.3, f'Earthly Branch: {branch}', fontsize=14, ha='center', va='center',
                    bbox=dict(boxstyle="round,pad=0.3", facecolor="#3498db", alpha=0.7))
             
             # 添加一些装饰性的元素
             # 五行关系（简化版）
-            elements = ['木', '火', '土', '金', '水']
+            elements = ['Wood', 'Fire', 'Earth', 'Metal', 'Water']
             angles = np.linspace(0, 2*np.pi, len(elements), endpoint=False)
             x = 0.5 + 0.3 * np.cos(angles)
             y = 0.5 + 0.3 * np.sin(angles)
             
             for i, (elem, px, py) in enumerate(zip(elements, x, y)):
-                ax.text(px, py, elem, fontsize=12, ha='center', va='center',
+                ax.text(px, py, elem, fontsize=10, ha='center', va='center',
                        bbox=dict(boxstyle="circle,pad=0.2", facecolor=["#27ae60", "#e74c3c", "#f39c12", "#3498db", "#9b59b6"][i], alpha=0.7))
             
             # 设置坐标轴
@@ -199,7 +199,7 @@ class ChartGenerator:
             
             # 保存为base64字符串 - 降低DPI
             img_buffer = io.BytesIO()
-            plt.savefig(img_buffer, format='png', dpi=150, bbox_inches='tight')
+            plt.savefig(img_buffer, format='png', dpi=100, bbox_inches='tight')
             img_buffer.seek(0)
             img_str = base64.b64encode(img_buffer.read()).decode()
             plt.close()
@@ -212,32 +212,32 @@ class ChartGenerator:
     def generate_fortune_trend_chart(self, fortune_data: Dict[str, int]) -> str:
         """生成运势趋势图"""
         try:
-            # 创建图形 - 减小尺寸
-            fig, ax = plt.subplots(figsize=(10, 5))
+            # 创建图形 - 进一步减小尺寸
+            fig, ax = plt.subplots(figsize=(8, 4))
             fig.patch.set_facecolor('#f8f9fa')
             ax.set_facecolor('#f8f9fa')
             
             # 设置标题
-            ax.set_title('运势趋势分析', fontsize=14, fontweight='bold', pad=15)
+            ax.set_title('Fortune Trend Analysis', fontsize=12, fontweight='bold', pad=10)
             
             # 数据
             categories = list(fortune_data.keys())
             values = list(fortune_data.values())
             
             # 创建折线图
-            ax.plot(categories, values, marker='o', linewidth=2, markersize=6, color='#8E44AD')
+            ax.plot(categories, values, marker='o', linewidth=2, markersize=5, color='#8E44AD')
             
             # 填充区域
             ax.fill_between(categories, values, alpha=0.3, color='#9b59b6')
             
             # 在点上添加数值标签
             for i, (cat, val) in enumerate(zip(categories, values)):
-                ax.text(i, val + 2, f'{val}', ha='center', va='bottom', fontsize=9, fontweight='bold')
+                ax.text(i, val + 2, f'{val}', ha='center', va='bottom', fontsize=8, fontweight='bold')
             
             # 设置标签
-            ax.set_ylabel('运势指数', fontsize=10)
-            ax.set_xlabel('运势类别', fontsize=10)
-            ax.tick_params(axis='both', labelsize=9)
+            ax.set_ylabel('Fortune Index', fontsize=9)
+            ax.set_xlabel('Category', fontsize=9)
+            ax.tick_params(axis='both', labelsize=8)
             
             # 设置y轴范围
             ax.set_ylim(0, 100)
@@ -250,7 +250,7 @@ class ChartGenerator:
             
             # 保存为base64字符串 - 降低DPI
             img_buffer = io.BytesIO()
-            plt.savefig(img_buffer, format='png', dpi=150, bbox_inches='tight')
+            plt.savefig(img_buffer, format='png', dpi=100, bbox_inches='tight')
             img_buffer.seek(0)
             img_str = base64.b64encode(img_buffer.read()).decode()
             plt.close()
@@ -263,8 +263,8 @@ class ChartGenerator:
     def generate_pie_chart(self, data: Dict[str, float], title: str = "分布图") -> str:
         """生成饼图"""
         try:
-            # 创建图形 - 减小尺寸
-            fig, ax = plt.subplots(figsize=(8, 6))
+            # 创建图形 - 进一步减小尺寸
+            fig, ax = plt.subplots(figsize=(6, 5))
             fig.patch.set_facecolor('#f8f9fa')
             
             # 数据
@@ -279,20 +279,20 @@ class ChartGenerator:
                                               startangle=90, colors=colors[:len(labels)])
             
             # 设置标题
-            ax.set_title(title, fontsize=14, fontweight='bold', pad=15)
+            ax.set_title(title, fontsize=12, fontweight='bold', pad=10)
             
             # 美化文本
             for autotext in autotexts:
                 autotext.set_color('white')
                 autotext.set_fontweight('bold')
-                autotext.set_fontsize(9)
+                autotext.set_fontsize(8)
             
             # 调整布局
             plt.tight_layout()
             
             # 保存为base64字符串 - 降低DPI
             img_buffer = io.BytesIO()
-            plt.savefig(img_buffer, format='png', dpi=150, bbox_inches='tight')
+            plt.savefig(img_buffer, format='png', dpi=100, bbox_inches='tight')
             img_buffer.seek(0)
             img_str = base64.b64encode(img_buffer.read()).decode()
             plt.close()
