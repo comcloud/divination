@@ -696,6 +696,51 @@ with st.sidebar:
     
     st.markdown("</div>", unsafe_allow_html=True)
 
+# 艺术字显示 - 当对话历史为空时
+if len(st.session_state.messages) == 0:
+    st.markdown("""
+    <div style="
+        text-align: center;
+        margin: 100px 0;
+        animation: fadeIn 2s ease-out, float 3s ease-in-out infinite;
+        position: relative;
+        padding: 40px 20px;
+    ">
+        <div style="
+            font-size: 3.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8E44AD 0%, #9b59b6 50%, #3498db 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+            -webkit-text-stroke: 2px rgba(255,255,255,0.8);
+            text-shadow: 
+                0 0 20px rgba(142, 68, 173, 0.5);
+            font-family: 'Microsoft YaHei', 'SimHei', 'Arial', sans-serif;
+            position: relative;
+            z-index: 1;
+        ">
+            献给我亲爱的树树
+        </div>
+        <div style="
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-top: 20px;
+        </div>
+        <div style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: sparkle 2s infinite;
+            opacity: 0.7;
+        "></div>
+    </div>
+    """, unsafe_allow_html=True)
+
 # 显示对话历史
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
