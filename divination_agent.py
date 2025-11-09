@@ -10,7 +10,7 @@ class DivinationAgent:
         """初始化占卜智能体"""
         # 如果没有提供API密钥，则从环境变量获取
         if api_key is None:
-            api_key = os.getenv('MODELSCOPE_API_KEY')
+            api_key = os.getenv('MODELSCOPE_API_KEY',"ms-df56303c-e814-48da-a195-3dc2487c3b33")
         
         # 安全地初始化ModelScope客户端，避免传递不支持的参数
         client_kwargs = {
