@@ -721,7 +721,7 @@ if len(st.session_state.messages) == 0:
             position: relative;
             z-index: 1;
         ">
-            献给我亲爱的树树
+            献给屏幕前的你
         </div>
         <div style="
             font-size: 1.2em;
